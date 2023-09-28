@@ -58,7 +58,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 "messages": messages
             }
 
-            print(payload)
+            print(json.dumps(payload, indent=2))
             conn = http.client.HTTPSConnection("api.openai.com")
             headers = {
                 "Authorization": f"Bearer {OPENAI_API_KEY}",
@@ -69,7 +69,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             # Parse the OpenAI response
             response_data = json.loads(response.read())
-            print(response_data)
+            print(json.dumps(response_data, indent=2))
             assistant_message = response_data["choices"][0]["message"]["content"]
 
             # Send back only the assistant's message
