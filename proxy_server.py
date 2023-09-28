@@ -72,7 +72,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             print(json.dumps(response_data, indent=2))
 
             response_message = ""
-            if response_data["error"]:
+            if "error" in response_data:
                 # Send the error message to the client
                 response_message = response_data["error"]["message"]
             else:
