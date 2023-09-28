@@ -1,8 +1,8 @@
 import http.server
 import http.client
 import socket
-import urllib
 import json
+import os
 import re
 
 
@@ -22,7 +22,7 @@ def get_local_ip():
 # Configuration for the proxy server
 HOST_NAME = get_local_ip()
 PORT_NUMBER = 8080
-OPENAI_API_KEY = 'YOUR API KEY HERE'  # replace with your API key
+OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def escape_invalid_json_chars(self, raw_json_str):
