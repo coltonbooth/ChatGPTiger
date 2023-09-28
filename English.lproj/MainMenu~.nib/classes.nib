@@ -1,0 +1,14 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {clearChat = id; saveChat = id; sendMessage = id; }; 
+            CLASS = ChatController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {chatLog = id; proxyServer = id; userMessageField = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = UserTextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
+    ); 
+    IBVersion = 1; 
+}
