@@ -70,13 +70,19 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             # Parse the OpenAI response
             response_data = json.loads(response.read())
             print(json.dumps(response_data, indent=2))
-            assistant_message = response_data["choices"][0]["message"]["content"]
 
-            # Send back only the assistant's message
+            response_message = ""
+            if response_data["error"]:
+                # Send the error message to the client
+                response_message = response_data["error"]["message"]
+            else:
+                # Send back only the assistant's message
+                response_message = response_data["choices"][0]["message"]["content"]
+
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(assistant_message.encode("utf-8"))
+            self.wfile.write(response_message.encode("utf-8"))
 
         except json.JSONDecodeError as e:
             print(f"JSONDecodeError at position {e.pos}: {e}")
