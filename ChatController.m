@@ -63,7 +63,16 @@
     [messageForChat appendString:@"\r\n\r\n"];
     
     NSTextStorage *textStorage = [chatLog textStorage];
-    NSAttributedString *attributedTextToAdd = [[[NSAttributedString alloc] initWithString:messageForChat] autorelease];
+    NSMutableAttributedString *attributedTextToAdd = [[[NSMutableAttributedString alloc] initWithString:messageForChat] autorelease];
+
+    NSFont *boldFont = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
+    NSRange boldedRange = NSMakeRange(0, 5);
+    [attributedTextToAdd beginEditing];
+    [attributedTextToAdd addAttribute: NSFontAttributeName
+        value: boldFont
+        range: boldedRange];
+    [attributedTextToAdd endEditing];
+
     [textStorage appendAttributedString:attributedTextToAdd];
 
     [self scrollChatLogToBottom];
@@ -77,14 +86,31 @@
 
     // Check if proxyValue is empty or nil before proceeding
     if (proxyValue == nil || [proxyValue isEqualToString:@""]) {
-		[proxyServer setStringValue:@"Please enter a value!"];
-        NSLog(@"Proxy server value is missing.");
-        return;
+        proxyValue = nil;
+        NSArray *addresses = [[NSHost currentHost] addresses];
+
+        // Get local IP address and tack on 8080 by default
+        NSEnumerator *e = [addresses objectEnumerator];
+        NSString *anAddress;
+        while (anAddress = [e nextObject]) {
+            if (![anAddress hasPrefix:@"127"] && [[anAddress componentsSeparatedByString:@"."] count] == 4) {
+                proxyValue = [NSString stringWithFormat:@"%@:8080", anAddress];
+                break;
+            }
+        }
+
+        // Can't find local IP address
+        if (proxyValue == nil) {
+            [proxyServer setStringValue:@"Please enter a value!"];
+            NSLog(@"Proxy server value is missing.");
+            return;
+        }
     }
 
     // Construct URL string
     NSString *urlString = [NSString stringWithFormat:@"http://%@/v1/chat/completions", proxyValue];
-    
+    NSLog(@"Sending request to: %@", urlString);
+
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 
     NSString *messagesString = [self constructMessagesFromChatLog];
@@ -140,13 +166,22 @@
         NSLog(responseString);
         
         NSString *assistantMessage = responseString;
-		
+
         NSMutableString *messageForChat = [NSMutableString stringWithString:@"ChatGPT: "];
         [messageForChat appendString:assistantMessage];
         [messageForChat appendString:@"\r\n\r\n"];
 		
         NSTextStorage *textStorage = [chatLog textStorage];
-        NSAttributedString *attributedTextToAdd = [[[NSAttributedString alloc] initWithString:messageForChat] autorelease];
+        NSMutableAttributedString *attributedTextToAdd = [[[NSMutableAttributedString alloc] initWithString:messageForChat] autorelease];
+
+        NSFont *boldFont = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
+        NSRange boldedRange = NSMakeRange(0, 8);
+        [attributedTextToAdd beginEditing];
+        [attributedTextToAdd addAttribute: NSFontAttributeName
+            value: boldFont
+            range: boldedRange];
+        [attributedTextToAdd endEditing];
+
         [textStorage appendAttributedString:attributedTextToAdd];
 
         [self scrollChatLogToBottom]; // Call to scroll after appending text
