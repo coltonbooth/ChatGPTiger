@@ -1,8 +1,8 @@
 import http.server
 import http.client
 import socket
-import urllib
 import json
+import os
 import re
 
 
@@ -22,7 +22,7 @@ def get_local_ip():
 # Configuration for the proxy server
 HOST_NAME = get_local_ip()
 PORT_NUMBER = 8080
-OPENAI_API_KEY = 'YOUR API KEY HERE'  # replace with your API key
+OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def escape_invalid_json_chars(self, raw_json_str):
@@ -58,7 +58,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 "messages": messages
             }
 
-            print(payload)
+            print(json.dumps(payload, indent=2))
             conn = http.client.HTTPSConnection("api.openai.com")
             headers = {
                 "Authorization": f"Bearer {OPENAI_API_KEY}",
@@ -69,14 +69,20 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             # Parse the OpenAI response
             response_data = json.loads(response.read())
-            print(response_data)
-            assistant_message = response_data["choices"][0]["message"]["content"]
+            print(json.dumps(response_data, indent=2))
 
-            # Send back only the assistant's message
+            response_message = ""
+            if "error" in response_data:
+                # Send the error message to the client
+                response_message = response_data["error"]["message"]
+            else:
+                # Send back only the assistant's message
+                response_message = response_data["choices"][0]["message"]["content"]
+
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(assistant_message.encode("utf-8"))
+            self.wfile.write(response_message.encode("utf-8"))
 
         except json.JSONDecodeError as e:
             print(f"JSONDecodeError at position {e.pos}: {e}")
