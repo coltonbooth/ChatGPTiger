@@ -63,7 +63,16 @@
     [messageForChat appendString:@"\r\n\r\n"];
     
     NSTextStorage *textStorage = [chatLog textStorage];
-    NSAttributedString *attributedTextToAdd = [[[NSAttributedString alloc] initWithString:messageForChat] autorelease];
+    NSMutableAttributedString *attributedTextToAdd = [[[NSMutableAttributedString alloc] initWithString:messageForChat] autorelease];
+
+    NSFont *boldFont = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
+    NSRange boldedRange = NSMakeRange(0, 5);
+    [attributedTextToAdd beginEditing];
+    [attributedTextToAdd addAttribute: NSFontAttributeName
+        value: boldFont
+        range: boldedRange];
+    [attributedTextToAdd endEditing];
+
     [textStorage appendAttributedString:attributedTextToAdd];
 
     [self scrollChatLogToBottom];
@@ -157,13 +166,22 @@
         NSLog(responseString);
         
         NSString *assistantMessage = responseString;
-		
+
         NSMutableString *messageForChat = [NSMutableString stringWithString:@"ChatGPT: "];
         [messageForChat appendString:assistantMessage];
         [messageForChat appendString:@"\r\n\r\n"];
 		
         NSTextStorage *textStorage = [chatLog textStorage];
-        NSAttributedString *attributedTextToAdd = [[[NSAttributedString alloc] initWithString:messageForChat] autorelease];
+        NSMutableAttributedString *attributedTextToAdd = [[[NSMutableAttributedString alloc] initWithString:messageForChat] autorelease];
+
+        NSFont *boldFont = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
+        NSRange boldedRange = NSMakeRange(0, 8);
+        [attributedTextToAdd beginEditing];
+        [attributedTextToAdd addAttribute: NSFontAttributeName
+            value: boldFont
+            range: boldedRange];
+        [attributedTextToAdd endEditing];
+
         [textStorage appendAttributedString:attributedTextToAdd];
 
         [self scrollChatLogToBottom]; // Call to scroll after appending text
