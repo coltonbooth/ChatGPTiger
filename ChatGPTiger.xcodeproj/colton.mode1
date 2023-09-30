@@ -370,9 +370,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>9C7F57FC2AC71D2E00B38D1F</string>
+				<string>9CB499BB2AC8DFC600EE61AA</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>9C7F57FD2AC71D2E00B38D1F</string>
+				<string>9CB499BC2AC8DFC600EE61AA</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -506,15 +506,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>9C7F58222AC7202600B38D1F</string>
-		<string>9C7F58232AC7202600B38D1F</string>
-		<string>9C7F58242AC7202600B38D1F</string>
-		<string>9C0ED47E2AC4DF5F00B086BA</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>9C7F581C2AC71FC600B38D1F</string>
 		<string>9C93D9662AB5DA4500D0BF61</string>
-		<string>/Users/colton/ChatGPTiger/ChatGPTiger.xcodeproj</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
+		<string>/Users/colton/ChatGPTiger-from-git/ChatGPTiger/ChatGPTiger.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>113 350 690 397 0 0 1280 778 </string>
@@ -594,7 +588,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>9C93D9662AB5DA4500D0BF61</string>
-				<string>9C7F57F52AC71D2000B38D1F</string>
+				<string>9CB499BD2AC8DFC600EE61AA</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -964,9 +958,9 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C0AD2B3069F1EA900FABCE6</string>
-				<string>9C7F57F62AC71D2000B38D1F</string>
+				<string>9CB499B72AC8DFB600EE61AA</string>
 				<string>1CD0528B0623707200166675</string>
-				<string>9C7F57F72AC71D2000B38D1F</string>
+				<string>9CB499B82AC8DFB600EE61AA</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.run</string>
@@ -975,7 +969,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C0AD2B3069F1EA900FABCE6</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

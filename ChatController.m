@@ -93,8 +93,10 @@
         NSEnumerator *e = [addresses objectEnumerator];
         NSString *anAddress;
         while (anAddress = [e nextObject]) {
+			NSLog(anAddress);
             if (![anAddress hasPrefix:@"127"] && [[anAddress componentsSeparatedByString:@"."] count] == 4) {
                 proxyValue = [NSString stringWithFormat:@"%@:8080", anAddress];
+				[proxyServer setStringValue:proxyValue];
                 break;
             }
         }
