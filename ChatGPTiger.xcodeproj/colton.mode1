@@ -259,14 +259,14 @@
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
+								<string>1C37FBAC04509CD000000102</string>
+								<string>1C37FAAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>4</integer>
-									<integer>2</integer>
-									<integer>0</integer>
+									<integer>15</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
@@ -289,7 +289,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>113 350 690 397 0 0 1280 778 </string>
+						<string>156 372 690 397 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -326,7 +326,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {482, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>113 350 690 397 0 0 1280 778 </string>
+								<string>156 372 690 397 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -346,7 +346,7 @@
 								<key>Frame</key>
 								<string>{{0, 5}, {482, 351}}</string>
 								<key>RubberWindowFrame</key>
-								<string>113 350 690 397 0 0 1280 778 </string>
+								<string>156 372 690 397 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -370,9 +370,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>9C7F57FC2AC71D2E00B38D1F</string>
+				<string>9C5BADAE2AC8BB7400556220</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>9C7F57FD2AC71D2E00B38D1F</string>
+				<string>9C5BADAF2AC8BB7400556220</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -506,18 +506,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>9C7F58222AC7202600B38D1F</string>
-		<string>9C7F58232AC7202600B38D1F</string>
-		<string>9C7F58242AC7202600B38D1F</string>
-		<string>9C0ED47E2AC4DF5F00B086BA</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>9C7F581C2AC71FC600B38D1F</string>
-		<string>9C93D9662AB5DA4500D0BF61</string>
 		<string>/Users/colton/ChatGPTiger/ChatGPTiger.xcodeproj</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
 	</array>
 	<key>WindowString</key>
-	<string>113 350 690 397 0 0 1280 778 </string>
+	<string>156 372 690 397 0 0 1280 778 </string>
 	<key>WindowTools</key>
 	<array>
 		<dict>
@@ -964,9 +957,9 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C0AD2B3069F1EA900FABCE6</string>
-				<string>9C7F57F62AC71D2000B38D1F</string>
+				<string>9C5BADB02AC8BB7400556220</string>
 				<string>1CD0528B0623707200166675</string>
-				<string>9C7F57F72AC71D2000B38D1F</string>
+				<string>9C5BADB12AC8BB7400556220</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.run</string>
