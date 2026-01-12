@@ -1,53 +1,85 @@
-# ChatGPTiger
+# ChatGPTiger 🐯
 
-ChatGPTiger is a utility that allows Mac OS X 10.4 (Tiger) computers to communicate with OpenAI's GPT-3.5-turbo model, also known as ChatGPT. This is essential because Mac OS X 10.4 was deprecated before the advent of modern SSL standards.
+**Bring the power of AI to your retro Mac.**
 
-## Table of Contents
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [For Power Users](#for-power-users)
-- [Downloads](#downloads)
-- [Contributing](#contributing)
-- [License](#license)
+ChatGPTiger is a native Mac OS X 10.4 (Tiger) application that bridges the gap between 2005 hardware and the modern AI era. It allows your PowerPC or Intel Mac running Tiger to communicate seamlessly with OpenAI's GPT-3.5-turbo model.
 
-## Features
-- Connects older Mac OS X 10.4 (Tiger) computers to OpenAI's GPT-3.5-turbo model
-- Included `proxy_server.py` to manage SSL and API calls
+---
 
-## Installation
+## ✨ Features
 
-1. **Get an OpenAI API Key**: Go to the [OpenAI API site](https://platform.openai.com) to obtain your API key.
-  
-2. **Download ChatGPTiger**: Choose from our list of compiled binaries or source code from the download section.
+*   **🤖 Full GPT-3.5 Support:** Ask questions, write code, or just chat.
+*   **💬 iChat-Style Bubbles:** A beautiful, retro-authentic UI powered by WebKit, featuring classic blue/grey speech bubbles.
+*   **🗣️ Speech Synthesis:** ChatGPTiger speaks back! Uses the native Mac OS X text-to-speech engine to read responses aloud.
+*   **📜 Context Aware:** Remembers your conversation history for coherent follow-up questions.
+*   **💾 Save Chats:** Export your conversations to a text file via `File -> Save` for posterity.
+*   **🔌 Universal Binary:** Runs natively on both PowerPC (G3/G4/G5) and Intel Macs.
 
-3. **Proxy Server Setup**: Run the included Python proxy server on a machine capable of modern SSL.
+## 🛠️ The Challenge (Why this exists)
 
-## Usage
+Mac OS X 10.4 was released years before modern security standards like TLS 1.2/1.3 were defined. As a result, older Macs cannot natively establish secure HTTPS connections to modern APIs like OpenAI.
 
-1. Run the proxy server by executing `OPENAI_API_KEY="YOUR API KEY HERE" python3 proxy_server.py` from the directory where `proxy_server.py` is located.
+**The Solution:**
+ChatGPTiger uses a "Man-in-the-Middle" proxy architecture:
+1.  **The App:** A lightweight Objective-C Cocoa app running on your vintage Mac. It sends standard HTTP requests to a local proxy.
+2.  **The Proxy:** A simple Python script running on a modern machine (or a highly upgraded vintage one) that handles the secure SSL handshake with OpenAI.
 
-2. Open ChatGPTiger.app on your older Mac. Alternatively, build the app in Xcode if you have downloaded the source code.
+## 🚀 Getting Started
 
-3. Enter the local IP address of your proxy server into the provided field in the ChatGPTiger app.
+### Prerequisites
 
-4. You can now start chatting with ChatGPT.
+1.  **A Vintage Mac:** Running Mac OS X 10.4 Tiger.
+2.  **A Modern Machine:** To run the proxy server (Linux, macOS, Windows, or even a Raspberry Pi).
+3.  **OpenAI API Key:** You need a valid key from [platform.openai.com](https://platform.openai.com).
 
-## For Power Users
+### Step 1: Set up the Proxy (Modern Machine)
 
-If you have TigerBrew installed, you can run the proxy server on your old Mac itself. Requirements are OpenSSL and Python3 installed via TigerBrew. Modifications may be required to the OpenSSL `.rb` file by adding `no-asm` to `configure_args`.
+The proxy server acts as the gateway. You need Python 3 installed.
 
-## Downloads
+1.  Download `proxy_server.py` from this repository.
+2.  Open your terminal.
+3.  Export your API key and run the server:
 
-- [Project GitHub](https://github.com/coltonbooth/ChatGPTiger)
-- [Universal Binary - Version 0.1.5](http://pickledapple.com/ChatGPTiger/ChatGPTiger-0.1.5-universal_binary.zip)
-- [Source Code - Version 0.1.5](http://pickledapple.com/ChatGPTiger/ChatGPTiger-0.1.5-source.zip)
-- [Proxy Server - Python Source](http://pickledapple.com/ChatGPTiger/proxy_server.zip)
+```bash
+# Set your API Key
+export OPENAI_API_KEY="sk-your-actual-api-key-here"
 
-## Contributing
+# Start the server
+python3 proxy_server.py
+```
 
-Interested in contributing? Check out the [issues](https://github.com/coltonbooth/ChatGPTiger/issues) or make a pull request.
+*The server will print its local IP address (e.g., `192.168.1.50`). Note this down.*
 
-## License
+### Step 2: Run the App (Vintage Mac)
 
-This project is licensed under Apache 2.
+1.  **Download:** Get the latest release (Universal Binary) or build it yourself using Xcode 2.5.
+2.  **Launch:** Open `ChatGPTiger.app`.
+3.  **Connect:**
+    *   In the "Proxy Server" field, enter the IP address and port of your modern machine (e.g., `192.168.1.50:8080`).
+    *   If you are lucky enough to run the proxy on the same machine (via TigerBrew), you can try `127.0.0.1:8080`.
+4.  **Chat:** Type a message and hit "Send".
+
+## 🏗️ Building from Source
+
+To build this project, you need a period-accurate development environment.
+
+*   **IDE:** Xcode 2.5
+*   **OS:** Mac OS X 10.4 or 10.5 (with 10.4 SDK installed).
+*   **SDK:** Mac OS X 10.4u SDK (Universal).
+
+Open `ChatGPTiger.xcodeproj` and hit Build.
+
+## 📝 License
+
+This project is licensed under the **Apache 2.0 License**.
+
+## 🤝 Contributing
+
+Love retro computing?
+1.  Fork the repo.
+2.  Create a feature branch.
+3.  Submit a Pull Request.
+
+---
+
+*Made with ❤️ for the PowerPC community.*
