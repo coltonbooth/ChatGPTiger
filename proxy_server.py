@@ -5,7 +5,6 @@ import json
 import os
 import re
 
-
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -22,43 +21,45 @@ def get_local_ip():
 # Configuration for the proxy server
 HOST_NAME = get_local_ip()
 PORT_NUMBER = 8080
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
-    def escape_invalid_json_chars(self, raw_json_str):
-        return re.sub(r'\\n', r'\\\\n', raw_json_str)
-
-    def sanitize_string(self, input_str):
-        return input_str.replace('\n', '\\n').replace('\r', '\\r').replace('"', '\\"')
-
-    def sanitize_dict(self, d):
-        new_dict = {}
-        for k, v in d.items():
-            if isinstance(v, str):
-                new_dict[k] = self.sanitize_string(v)
-            else:
-                new_dict[k] = v
-        return new_dict
-
-
     def do_POST(self):
         try:
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
-            chat_log = post_data.decode('utf-8')
-            system_message = """You are a helpful assistant who is speaking to us using ChatGPTiger,"
+            decoded_data = post_data.decode('utf-8')
+            
+            system_message_content = """You are a helpful assistant who is speaking to us using ChatGPTiger,
                              an application developed for computers running Mac OS X 10.4 Tiger. You do not
                              need to preface your response with 'ChatGPT'."""
+            system_message = {"role": "system", "content": system_message_content}
 
-            # Construct messages to send to OpenAI
-            messages = [{"role": "user", "content": chat_log},
-                        {"role": "system", "content": system_message}]
+            messages = []
+            
+            # Check if input is JSON (list of messages) or raw string
+            try:
+                parsed = json.loads(decoded_data)
+                if isinstance(parsed, list):
+                    messages = [system_message] + parsed
+                else:
+                    # JSON but not a list? Treat as content.
+                    messages = [system_message, {"role": "user", "content": decoded_data}]
+            except json.JSONDecodeError:
+                # Raw string
+                messages = [system_message, {"role": "user", "content": decoded_data}]
+
             payload = {
                 "model": "gpt-3.5-turbo",
                 "messages": messages
             }
 
+            print("Sending payload to OpenAI:")
             print(json.dumps(payload, indent=2))
+            
+            if not OPENAI_API_KEY:
+                raise Exception("OPENAI_API_KEY not set")
+
             conn = http.client.HTTPSConnection("api.openai.com")
             headers = {
                 "Authorization": f"Bearer {OPENAI_API_KEY}",
@@ -67,29 +68,31 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.request("POST", "/v1/chat/completions", body=json.dumps(payload), headers=headers)
             response = conn.getresponse()
 
-            # Parse the OpenAI response
             response_data = json.loads(response.read())
-            print(json.dumps(response_data, indent=2))
+            print("Response from OpenAI:")
+            # print(json.dumps(response_data, indent=2))
 
             response_message = ""
             if "error" in response_data:
-                # Send the error message to the client
-                response_message = response_data["error"]["message"]
+                response_message = f"Error: {response_data['error']['message']}"
             else:
-                # Send back only the assistant's message
                 response_message = response_data["choices"][0]["message"]["content"]
 
             self.send_response(200)
-            self.send_header("Content-type", "application/json")
+            self.send_header("Content-type", "text/plain; charset=utf-8")
             self.end_headers()
             self.wfile.write(response_message.encode("utf-8"))
 
-        except json.JSONDecodeError as e:
-            print(f"JSONDecodeError at position {e.pos}: {e}")
         except Exception as general_exception:
-            print(f"An unknown error occurred: {general_exception}")
+            print(f"An error occurred: {general_exception}")
+            self.send_response(500)
+            self.end_headers()
+            self.wfile.write(str(general_exception).encode("utf-8"))
 
 if __name__ == '__main__':
+    if not OPENAI_API_KEY:
+        print("WARNING: OPENAI_API_KEY is not set. Requests will fail.")
+        
     httpd = http.server.HTTPServer((HOST_NAME, PORT_NUMBER), ProxyHTTPRequestHandler)
     print("Server started on", HOST_NAME, "at port", PORT_NUMBER)
     try:

@@ -1,5 +1,5 @@
 //
-//  ChatController.m
+//  ChatController.h
 //  ChatGPTiger
 //
 //  Created by Colton Booth
@@ -8,13 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ChatController : NSObject <NSCoding> {
+@interface ChatController : NSObject {
     IBOutlet NSTextField *userMessageField;
     IBOutlet NSTextView *chatLog;
     IBOutlet NSTextField *proxyServer;
+    
+    NSSpeechSynthesizer *synthesizer;
+    id webView; // Dynamically loaded WebView
+    NSMutableArray *chatHistory; // Store history for saving
 }
 
-- (id)initWithCoder:(NSCoder *)coder;
 - (IBAction)sendMessage:(id)sender;
 - (IBAction)clearChat:(id)sender;
 - (IBAction)saveChat:(id)sender;
